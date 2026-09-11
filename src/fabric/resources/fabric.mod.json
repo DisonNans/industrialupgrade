@@ -3,25 +3,16 @@
   "id": "industrialupgrade",
   "version": "${version}",
   "name": "Industrial Upgrade",
-  "description": "Industrial Upgrade port for Minecraft 1.20.1 Fabric. Gameplay logic is being migrated from the original 1.12.2 implementation.",
-  "authors": [
-    "Denfop",
-    "ijo42",
-    "DisonNans"
-  ],
+  "description": "Industrial Upgrade port for Minecraft 1.20.1 Fabric.",
+  "authors": ["Denfop", "ijo42", "DisonNans"],
   "contact": {
     "homepage": "https://github.com/DisonNans/industrialupgrade"
   },
   "license": "LGPL-2.1",
-  "icon": "assets/industrialupgrade/icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "com.denfop.fabric.IndustrialUpgradeFabric"
-    ],
-    "client": [
-      "com.denfop.fabric.IndustrialUpgradeFabricClient"
-    ]
+    "main": ["com.denfop.fabric.IndustrialUpgradeFabric"],
+    "client": ["com.denfop.fabric.IndustrialUpgradeFabricClient"]
   },
   "depends": {
     "fabricloader": ">=0.15.11",

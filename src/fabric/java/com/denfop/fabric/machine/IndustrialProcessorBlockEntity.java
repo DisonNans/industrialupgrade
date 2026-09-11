@@ -1,6 +1,6 @@
 package com.denfop.fabric.machine;
 
-import com.denfop.fabric.FabricRegistries;
+import com.denfop.fabric.FabricMultiMachineRegistry;
 import com.denfop.fabric.energy.EnergyStorage;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -23,7 +23,7 @@ public final class IndustrialProcessorBlockEntity extends BlockEntity implements
     private boolean active;
 
     public IndustrialProcessorBlockEntity(BlockPos pos, BlockState state) {
-        super(FabricRegistries.INDUSTRIAL_PROCESSOR_BLOCK_ENTITY, pos, state);
+        super(FabricMultiMachineRegistry.BLOCK_ENTITY_TYPE, pos, state);
         IndustrialProcessorBlock block = (IndustrialProcessorBlock) state.getBlock();
         this.machineType = block.machineType();
         this.slotCount = block.slotCount();
@@ -84,28 +84,15 @@ public final class IndustrialProcessorBlockEntity extends BlockEntity implements
 
     private int inputCount(int type) { return type == 2 ? 3 : 1; }
     private int outputCount(int type) { return type == 1 ? 2 : 1; }
-
     private boolean canOutput(Item item, int count) {
         ItemStack current = inventory.get(slotCount);
         return current.isEmpty() || (current.getItem() == item && current.getCount() + count <= current.getMaxCount());
     }
 
     private Item dustFor(Item item) {
-        if (item == FabricRegistries.IRON_INGOT) return FabricRegistries.IRON_DUST;
-        if (item == FabricRegistries.COPPER_INGOT) return FabricRegistries.COPPER_DUST;
-        if (item == FabricRegistries.TIN_INGOT) return FabricRegistries.TIN_DUST;
-        if (item == FabricRegistries.LEAD_INGOT) return FabricRegistries.LEAD_DUST;
-        if (item == FabricRegistries.NICKEL_INGOT) return FabricRegistries.NICKEL_DUST;
-        if (item == FabricRegistries.ZINC_INGOT) return FabricRegistries.ZINC_DUST;
-        if (item == FabricRegistries.SILVER_INGOT) return FabricRegistries.SILVER_DUST;
-        if (item == FabricRegistries.CHROMIUM_INGOT) return FabricRegistries.CHROMIUM_DUST;
-        if (item == FabricRegistries.ALUMINUM_INGOT) return FabricRegistries.ALUMINUM_DUST;
-        if (item == FabricRegistries.MAGNESIUM_INGOT) return FabricRegistries.MAGNESIUM_DUST;
-        if (item == FabricRegistries.TITANIUM_INGOT) return FabricRegistries.TITANIUM_DUST;
-        if (item == FabricRegistries.MANGANESE_INGOT) return FabricRegistries.MANGANESE_DUST;
-        if (item == FabricRegistries.VANADY_INGOT) return FabricRegistries.VANADY_DUST;
-        if (item == FabricRegistries.COBALT_INGOT) return FabricRegistries.COBALT_DUST;
-        if (item == FabricRegistries.TUNGSTEN_INGOT) return FabricRegistries.TUNGSTEN_DUST;
+        if (item == FabricMultiMachineRegistry.IRON_INGOT) return FabricMultiMachineRegistry.IRON_DUST;
+        if (item == net.minecraft.item.Items.COPPER_INGOT) return FabricMultiMachineRegistry.COPPER_DUST;
+        if (item == FabricMultiMachineRegistry.IRON_INGOT) return FabricMultiMachineRegistry.IRON_DUST;
         return null;
     }
 

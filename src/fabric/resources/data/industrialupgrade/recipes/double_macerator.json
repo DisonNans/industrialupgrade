@@ -1,0 +1,1 @@
+{"type":"minecraft:crafting_shaped","pattern":["III","RFR","IRI"],"key":{"I":{"item":"minecraft:iron_ingot"},"R":{"item":"minecraft:redstone"},"F":{"item":"minecraft:furnace"}},"result":{"item":"industrialupgrade:double_macerator","count":1}}

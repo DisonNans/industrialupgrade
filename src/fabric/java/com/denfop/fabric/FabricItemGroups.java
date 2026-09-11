@@ -95,6 +95,13 @@ public final class FabricItemGroups {
                 entries.add(new ItemStack(FabricStorageRegistry.CESU.asItem()));
                 entries.add(new ItemStack(FabricStorageRegistry.MFE.asItem()));
                 entries.add(new ItemStack(FabricStorageRegistry.MFSU.asItem()));
+                entries.add(new ItemStack(FabricStorageRegistry.IMP_MFSU.asItem()));
+                entries.add(new ItemStack(FabricStorageRegistry.ULT_MFSU.asItem()));
+                entries.add(new ItemStack(FabricStorageRegistry.PERFECT_MFSU.asItem()));
+                entries.add(new ItemStack(FabricStorageRegistry.BARION_MFSU.asItem()));
+                entries.add(new ItemStack(FabricStorageRegistry.HADRON_MFSU.asItem()));
+                entries.add(new ItemStack(FabricStorageRegistry.GRAVITON_MFSU.asItem()));
+                entries.add(new ItemStack(FabricStorageRegistry.QUARK_MFSU.asItem()));
                 for (var panel : FabricSolarRegistry.PANELS) entries.add(new ItemStack(panel.asItem()));
             })
             .build();

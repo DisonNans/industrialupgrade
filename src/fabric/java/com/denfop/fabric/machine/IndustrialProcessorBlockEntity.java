@@ -29,8 +29,21 @@ public final class IndustrialProcessorBlockEntity extends BlockEntity implements
         this.machineType = block.machineType();
         this.slotCount = block.slotCount();
         this.inventory = DefaultedList.ofSize(slotCount + 1, ItemStack.EMPTY);
-        this.operationLength = machineType == 3 ? 100 : 300;
-        this.energyPerTick = machineType == 3 ? 3 : 2;
+        this.operationLength = switch (machineType) {
+            case 3 -> 100;
+            case 5, 6, 7 -> 200;
+            case 8 -> 500;
+            case 9 -> 45;
+            case 10 -> 25;
+            default -> 300;
+        };
+        this.energyPerTick = switch (machineType) {
+            case 3 -> 3;
+            case 5, 6, 7 -> 10;
+            case 8 -> 4;
+            case 9, 10 -> 1;
+            default -> 2;
+        };
         this.energy = new EnergyStorage((double) energyPerTick * operationLength * slotCount,
                 (double) energyPerTick * operationLength * slotCount,
                 (double) energyPerTick * operationLength * slotCount);

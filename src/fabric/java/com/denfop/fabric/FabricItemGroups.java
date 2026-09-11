@@ -91,6 +91,10 @@ public final class FabricItemGroups {
                 entries.add(new ItemStack(FabricGeneratorRegistry.ADVANCED_GENERATOR.asItem()));
                 entries.add(new ItemStack(FabricGeneratorRegistry.IMPROVED_GENERATOR.asItem()));
                 entries.add(new ItemStack(FabricGeneratorRegistry.PERFECT_GENERATOR.asItem()));
+                entries.add(new ItemStack(FabricStorageRegistry.BATBOX.asItem()));
+                entries.add(new ItemStack(FabricStorageRegistry.CESU.asItem()));
+                entries.add(new ItemStack(FabricStorageRegistry.MFE.asItem()));
+                entries.add(new ItemStack(FabricStorageRegistry.MFSU.asItem()));
             })
             .build();
 

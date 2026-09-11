@@ -95,6 +95,7 @@ public final class FabricItemGroups {
                 entries.add(new ItemStack(FabricStorageRegistry.CESU.asItem()));
                 entries.add(new ItemStack(FabricStorageRegistry.MFE.asItem()));
                 entries.add(new ItemStack(FabricStorageRegistry.MFSU.asItem()));
+                for (var panel : FabricSolarRegistry.PANELS) entries.add(new ItemStack(panel.asItem()));
             })
             .build();
 

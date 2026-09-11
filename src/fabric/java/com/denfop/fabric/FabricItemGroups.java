@@ -88,6 +88,9 @@ public final class FabricItemGroups {
                 entries.add(new ItemStack(FabricMultiMachineRegistry.TRIPLE_ASSAMPLER_SCRAP.asItem()));
                 entries.add(new ItemStack(FabricMultiMachineRegistry.QUAD_ASSAMPLER_SCRAP.asItem()));
                 for (CableType type : CableType.values()) entries.add(new ItemStack(FabricCableRegistry.CABLES[type.ordinal()]));
+                entries.add(new ItemStack(FabricGeneratorRegistry.ADVANCED_GENERATOR.asItem()));
+                entries.add(new ItemStack(FabricGeneratorRegistry.IMPROVED_GENERATOR.asItem()));
+                entries.add(new ItemStack(FabricGeneratorRegistry.PERFECT_GENERATOR.asItem()));
             })
             .build();
 

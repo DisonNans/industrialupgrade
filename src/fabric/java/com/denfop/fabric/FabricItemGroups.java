@@ -40,6 +40,34 @@ public final class FabricItemGroups {
                 entries.add(new ItemStack(FabricRegistries.VITALIUM_INGOT));
                 entries.add(new ItemStack(FabricRegistries.ALLOY_SMELTER.asItem()));
                 entries.add(new ItemStack(FabricRegistries.ADVANCED_ALLOY_SMELTER.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.IRON_INGOT));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.IRON_DUST));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.COPPER_DUST));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.TIN_DUST));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.LEAD_DUST));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.NICKEL_DUST));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.ZINC_DUST));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.SILVER_DUST));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.CHROMIUM_DUST));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.ALUMINUM_DUST));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.MAGNESIUM_DUST));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.TITANIUM_DUST));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.MANGANESE_DUST));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.VANADY_DUST));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.COBALT_DUST));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.TUNGSTEN_DUST));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.DOUBLE_MACERATOR.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.TRIPLE_MACERATOR.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.QUAD_MACERATOR.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.DOUBLE_COMPRESSOR.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.TRIPLE_COMPRESSOR.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.QUAD_COMPRESSOR.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.DOUBLE_ELECTRIC_FURNACE.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.TRIPLE_ELECTRIC_FURNACE.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.QUAD_ELECTRIC_FURNACE.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.DOUBLE_EXTRACTOR.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.TRIPLE_EXTRACTOR.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.QUAD_EXTRACTOR.asItem()));
             })
             .build();
 

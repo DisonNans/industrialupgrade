@@ -17,22 +17,32 @@ public final class FabricSolarRegistry {
             "photonic_solar_panel", "neutronium_solar_panel", "barion_solar_panel", "hadron_solar_panel",
             "graviton_solar_panel", "quark_solar_panel"
     };
-    private static final double[] GENERATION = {
-            1D, 8D, 64D, 512D, 4096D, 32768D, 262144D,
-            1048576D, 4194304D, 16777216D, 67108864D, 268435456D,
-            1073741824D, 4294967296D
+    private static final double[] DAY_GENERATION = {
+            5D, 20D, 80D, 320D, 1280D, 5120D, 20480D, 81920D,
+            327680D, 1325720D, 5302880D, 21211520D, 84846080D, 339384320D
+    };
+    private static final double[] NIGHT_GENERATION = {
+            5D, 10D, 40D, 160D, 640D, 2560D, 10240D, 40960D,
+            327680D, 1325720D, 5302880D, 21211520D, 84846080D, 339384320D
     };
     private static final double[] STORAGE = {
-            8000D, 64000D, 512000D, 4096000D, 32768000D, 262144000D, 2097152000D,
-            8388608000D, 33554432000D, 134217728000D, 536870912000D, 2147483648000D,
-            8589934592000D, 34359738368000D
+            3200D, 20000D, 200000D, 1000000D, 5000000D, 50000000D, 1000000000D,
+            1500000000D, 5000000000D, 6500000000D, 10000000000D, 2500000000D,
+            25000000000D, 2500000000000D
+    };
+    private static final double[] OUTPUT = {
+            10D, 40D, 160D, 640D, 2560D, 10240D, 40960D, 327680D,
+            655360D, 2651440D, 10605760D, 42423040D, 169692160D, 678768640D
     };
     public static final Block[] PANELS = new Block[NAMES.length];
     public static final net.minecraft.block.entity.BlockEntityType<FabricSolarPanelBlockEntity> BLOCK_ENTITY_TYPE;
 
     static {
         for (int i = 0; i < PANELS.length; i++) {
-            PANELS[i] = new FabricSolarPanelBlock(Block.Settings.copy(Blocks.IRON_BLOCK), i, GENERATION[i], STORAGE[i]);
+            PANELS[i] = new FabricSolarPanelBlock(
+                    Block.Settings.copy(Blocks.IRON_BLOCK), i,
+                    DAY_GENERATION[i], NIGHT_GENERATION[i], STORAGE[i], OUTPUT[i]
+            );
         }
         BLOCK_ENTITY_TYPE = FabricBlockEntityTypeBuilder.create(FabricSolarPanelBlockEntity::new, PANELS).build();
     }

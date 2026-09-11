@@ -92,7 +92,7 @@ public final class IndustrialProcessorBlockEntity extends BlockEntity implements
     }
 
     private Item dustFor(Item item) {
-        if (item == FabricRegistries.IRON_INGOT || item == net.minecraft.item.Items.IRON_INGOT) return FabricMultiMachineRegistry.IRON_DUST;
+        if (item == FabricMultiMachineRegistry.IRON_INGOT || item == net.minecraft.item.Items.IRON_INGOT) return FabricMultiMachineRegistry.IRON_DUST;
         if (item == net.minecraft.item.Items.COPPER_INGOT) return FabricMultiMachineRegistry.COPPER_DUST;
         if (item == FabricRegistries.TIN_INGOT) return FabricMultiMachineRegistry.TIN_DUST;
         if (item == FabricRegistries.LEAD_INGOT) return FabricMultiMachineRegistry.LEAD_DUST;
@@ -111,7 +111,7 @@ public final class IndustrialProcessorBlockEntity extends BlockEntity implements
     }
 
     private Item ingotFor(Item item) {
-        if (item == FabricMultiMachineRegistry.IRON_DUST) return FabricRegistries.IRON_INGOT;
+        if (item == FabricMultiMachineRegistry.IRON_DUST) return FabricMultiMachineRegistry.IRON_INGOT;
         if (item == FabricMultiMachineRegistry.COPPER_DUST) return net.minecraft.item.Items.COPPER_INGOT;
         if (item == FabricMultiMachineRegistry.TIN_DUST) return FabricRegistries.TIN_INGOT;
         if (item == FabricMultiMachineRegistry.LEAD_DUST) return FabricRegistries.LEAD_INGOT;

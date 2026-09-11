@@ -21,6 +21,11 @@ public final class FabricItemGroups {
                 entries.add(new ItemStack(FabricRegistries.MAGNESIUM_INGOT));
                 entries.add(new ItemStack(FabricRegistries.TITANIUM_INGOT));
                 entries.add(new ItemStack(FabricRegistries.MANGANESE_INGOT));
+                entries.add(new ItemStack(FabricRegistries.LEAD_INGOT));
+                entries.add(new ItemStack(FabricRegistries.TIN_INGOT));
+                entries.add(new ItemStack(FabricRegistries.VANADY_INGOT));
+                entries.add(new ItemStack(FabricRegistries.COBALT_INGOT));
+                entries.add(new ItemStack(FabricRegistries.TUNGSTEN_INGOT));
                 entries.add(new ItemStack(FabricRegistries.ELECTRUM_INGOT));
                 entries.add(new ItemStack(FabricRegistries.INVAR_INGOT));
                 entries.add(new ItemStack(FabricRegistries.RED_BRASS_INGOT));
@@ -28,7 +33,13 @@ public final class FabricItemGroups {
                 entries.add(new ItemStack(FabricRegistries.DURALUMIN_INGOT));
                 entries.add(new ItemStack(FabricRegistries.ALUMEL_INGOT));
                 entries.add(new ItemStack(FabricRegistries.FERROMANGANESE_INGOT));
+                entries.add(new ItemStack(FabricRegistries.ALUMINUM_BRONZE_INGOT));
+                entries.add(new ItemStack(FabricRegistries.MUNTSA_INGOT));
+                entries.add(new ItemStack(FabricRegistries.ALCLED_INGOT));
+                entries.add(new ItemStack(FabricRegistries.VANADOALUMITE_INGOT));
+                entries.add(new ItemStack(FabricRegistries.VITALIUM_INGOT));
                 entries.add(new ItemStack(FabricRegistries.ALLOY_SMELTER.asItem()));
+                entries.add(new ItemStack(FabricRegistries.ADVANCED_ALLOY_SMELTER.asItem()));
             })
             .build();
 

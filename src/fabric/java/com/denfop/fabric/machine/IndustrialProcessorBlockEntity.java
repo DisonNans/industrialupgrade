@@ -19,14 +19,14 @@ public final class IndustrialProcessorBlockEntity extends BlockEntity implements
     private final EnergyStorage energy;
     private final int operationLength;
     private final int energyPerTick;
-    private final int operations;
     private final int[] progress;
     private boolean active;
 
-    public IndustrialProcessorBlockEntity(BlockPos pos, BlockState state, int machineType, int slotCount) {
+    public IndustrialProcessorBlockEntity(BlockPos pos, BlockState state) {
         super(FabricRegistries.INDUSTRIAL_PROCESSOR_BLOCK_ENTITY, pos, state);
-        this.machineType = machineType;
-        this.slotCount = slotCount;
+        IndustrialProcessorBlock block = (IndustrialProcessorBlock) state.getBlock();
+        this.machineType = block.machineType();
+        this.slotCount = block.slotCount();
         this.inventory = DefaultedList.ofSize(slotCount + 1, ItemStack.EMPTY);
         this.operationLength = switch (machineType) {
             case 3 -> 100;
@@ -43,7 +43,6 @@ public final class IndustrialProcessorBlockEntity extends BlockEntity implements
             case 9, 10 -> 1;
             default -> 2;
         };
-        this.operations = slotCount;
         this.energy = new EnergyStorage((double) energyPerTick * operationLength * slotCount,
                 (double) energyPerTick * operationLength * slotCount,
                 (double) energyPerTick * operationLength * slotCount);
@@ -53,25 +52,22 @@ public final class IndustrialProcessorBlockEntity extends BlockEntity implements
     public void tick() {
         if (world == null || world.isClient) return;
         active = false;
-        for (int i = 0; i < operations; i++) {
+        for (int i = 0; i < slotCount; i++) {
             ItemStack input = inventory.get(i);
             Item outputItem = outputFor(input, machineType);
-            if (outputItem == null || !canOutput(outputItem, outputCount(input, machineType))) {
+            if (outputItem == null) { progress[i] = 0; continue; }
+            int amount = outputCount(machineType);
+            if (!canOutput(outputItem, amount) || input.getCount() < inputCount(machineType)) {
                 progress[i] = 0;
                 continue;
             }
-            if (energy.getEnergy() < energyPerTick) {
-                progress[i] = 0;
-                continue;
-            }
+            if (energy.getEnergy() < energyPerTick) { progress[i] = 0; continue; }
             energy.use(energyPerTick);
             progress[i]++;
             active = true;
             if (progress[i] >= operationLength) {
-                int consumed = inputCount(machineType);
-                input.decrement(consumed);
+                input.decrement(inputCount(machineType));
                 ItemStack out = inventory.get(slotCount);
-                int amount = outputCount(input, machineType);
                 if (out.isEmpty()) inventory.set(slotCount, new ItemStack(outputItem, amount));
                 else out.increment(amount);
                 progress[i] = 0;
@@ -83,19 +79,11 @@ public final class IndustrialProcessorBlockEntity extends BlockEntity implements
     private Item outputFor(ItemStack input, int type) {
         if (input.isEmpty()) return null;
         if (type == 1) return dustFor(input.getItem());
-        if (type == 2 || type == 3) return input.getItem();
-        if (type == 4) return input.getItem();
         return input.getItem();
     }
 
-    private int inputCount(int type) { return switch (type) { case 2 -> 3; default -> 1; }; }
-
-    private int outputCount(ItemStack input, int type) {
-        if (type == 1) return 2;
-        if (type == 2) return 1;
-        if (type == 3) return 1;
-        return 1;
-    }
+    private int inputCount(int type) { return type == 2 ? 3 : 1; }
+    private int outputCount(int type) { return type == 1 ? 2 : 1; }
 
     private boolean canOutput(Item item, int count) {
         ItemStack current = inventory.get(slotCount);
@@ -128,7 +116,6 @@ public final class IndustrialProcessorBlockEntity extends BlockEntity implements
         super.writeNbt(nbt);
         nbt.putDouble("energy", energy.getEnergy());
         nbt.putBoolean("active", active);
-        nbt.putInt("machine_type", machineType);
         for (int i = 0; i < progress.length; i++) nbt.putInt("progress_" + i, progress[i]);
         for (int i = 0; i < inventory.size(); i++) if (!inventory.get(i).isEmpty()) nbt.put("slot_" + i, inventory.get(i).writeNbt(new NbtCompound()));
     }

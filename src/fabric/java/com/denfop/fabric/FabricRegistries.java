@@ -1,5 +1,7 @@
 package com.denfop.fabric;
 
+import com.denfop.fabric.machine.AdvancedAlloySmelterBlock;
+import com.denfop.fabric.machine.AdvancedAlloySmelterBlockEntity;
 import com.denfop.fabric.machine.AlloySmelterBlock;
 import com.denfop.fabric.machine.AlloySmelterBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -22,6 +24,11 @@ public final class FabricRegistries {
     public static final Item MAGNESIUM_INGOT = new Item(new Item.Settings());
     public static final Item TITANIUM_INGOT = new Item(new Item.Settings());
     public static final Item MANGANESE_INGOT = new Item(new Item.Settings());
+    public static final Item LEAD_INGOT = new Item(new Item.Settings());
+    public static final Item TIN_INGOT = new Item(new Item.Settings());
+    public static final Item VANADY_INGOT = new Item(new Item.Settings());
+    public static final Item COBALT_INGOT = new Item(new Item.Settings());
+    public static final Item TUNGSTEN_INGOT = new Item(new Item.Settings());
 
     public static final Item ELECTRUM_INGOT = new Item(new Item.Settings());
     public static final Item INVAR_INGOT = new Item(new Item.Settings());
@@ -30,10 +37,19 @@ public final class FabricRegistries {
     public static final Item DURALUMIN_INGOT = new Item(new Item.Settings());
     public static final Item ALUMEL_INGOT = new Item(new Item.Settings());
     public static final Item FERROMANGANESE_INGOT = new Item(new Item.Settings());
+    public static final Item ALUMINUM_BRONZE_INGOT = new Item(new Item.Settings());
+    public static final Item MUNTSA_INGOT = new Item(new Item.Settings());
+    public static final Item ALCLED_INGOT = new Item(new Item.Settings());
+    public static final Item VANADOALUMITE_INGOT = new Item(new Item.Settings());
+    public static final Item VITALIUM_INGOT = new Item(new Item.Settings());
 
     public static final Block ALLOY_SMELTER = new AlloySmelterBlock(Block.Settings.copy(Blocks.IRON_BLOCK));
     public static final net.minecraft.block.entity.BlockEntityType<AlloySmelterBlockEntity> ALLOY_SMELTER_BLOCK_ENTITY =
             FabricBlockEntityTypeBuilder.create(AlloySmelterBlockEntity::new, ALLOY_SMELTER).build();
+
+    public static final Block ADVANCED_ALLOY_SMELTER = new AdvancedAlloySmelterBlock(Block.Settings.copy(Blocks.IRON_BLOCK));
+    public static final net.minecraft.block.entity.BlockEntityType<AdvancedAlloySmelterBlockEntity> ADVANCED_ALLOY_SMELTER_BLOCK_ENTITY =
+            FabricBlockEntityTypeBuilder.create(AdvancedAlloySmelterBlockEntity::new, ADVANCED_ALLOY_SMELTER).build();
 
     private static boolean initialized;
 
@@ -53,6 +69,11 @@ public final class FabricRegistries {
         registerItem("magnesium_ingot", MAGNESIUM_INGOT);
         registerItem("titanium_ingot", TITANIUM_INGOT);
         registerItem("manganese_ingot", MANGANESE_INGOT);
+        registerItem("lead_ingot", LEAD_INGOT);
+        registerItem("tin_ingot", TIN_INGOT);
+        registerItem("vanady_ingot", VANADY_INGOT);
+        registerItem("cobalt_ingot", COBALT_INGOT);
+        registerItem("tungsten_ingot", TUNGSTEN_INGOT);
 
         registerItem("electrum_ingot", ELECTRUM_INGOT);
         registerItem("invar_ingot", INVAR_INGOT);
@@ -61,9 +82,16 @@ public final class FabricRegistries {
         registerItem("duralumin_ingot", DURALUMIN_INGOT);
         registerItem("alumel_ingot", ALUMEL_INGOT);
         registerItem("ferromanganese_ingot", FERROMANGANESE_INGOT);
+        registerItem("aluminum_bronze_ingot", ALUMINUM_BRONZE_INGOT);
+        registerItem("muntsa_ingot", MUNTSA_INGOT);
+        registerItem("alcled_ingot", ALCLED_INGOT);
+        registerItem("vanadoalumite_ingot", VANADOALUMITE_INGOT);
+        registerItem("vitalium_ingot", VITALIUM_INGOT);
 
         registerBlock("alloy_smelter", ALLOY_SMELTER, true);
         Registry.register(Registries.BLOCK_ENTITY_TYPE, IndustrialUpgradeFabric.id("alloy_smelter"), ALLOY_SMELTER_BLOCK_ENTITY);
+        registerBlock("advanced_alloy_smelter", ADVANCED_ALLOY_SMELTER, true);
+        Registry.register(Registries.BLOCK_ENTITY_TYPE, IndustrialUpgradeFabric.id("advanced_alloy_smelter"), ADVANCED_ALLOY_SMELTER_BLOCK_ENTITY);
     }
 
     private static void registerItem(String path, Item item) {

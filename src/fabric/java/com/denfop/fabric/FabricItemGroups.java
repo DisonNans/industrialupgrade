@@ -68,6 +68,24 @@ public final class FabricItemGroups {
                 entries.add(new ItemStack(FabricMultiMachineRegistry.DOUBLE_EXTRACTOR.asItem()));
                 entries.add(new ItemStack(FabricMultiMachineRegistry.TRIPLE_EXTRACTOR.asItem()));
                 entries.add(new ItemStack(FabricMultiMachineRegistry.QUAD_EXTRACTOR.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.DOUBLE_ROLLING.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.TRIPLE_ROLLING.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.QUAD_ROLLING.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.DOUBLE_EXTRUDING.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.TRIPLE_EXTRUDING.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.QUAD_EXTRUDING.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.DOUBLE_CUTTING.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.TRIPLE_CUTTING.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.QUAD_CUTTING.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.DOUBLE_FERMER.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.TRIPLE_FERMER.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.QUAD_FERMER.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.DOUBLE_RECYCLER.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.TRIPLE_RECYCLER.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.QUAD_RECYCLER.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.DOUBLE_ASSAMPLER_SCRAP.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.TRIPLE_ASSAMPLER_SCRAP.asItem()));
+                entries.add(new ItemStack(FabricMultiMachineRegistry.QUAD_ASSAMPLER_SCRAP.asItem()));
             })
             .build();
 

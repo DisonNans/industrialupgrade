@@ -1,5 +1,6 @@
 package com.denfop.fabric.machine;
 
+import com.denfop.fabric.FabricCableRegistry;
 import com.denfop.fabric.energy.CableType;
 import com.denfop.fabric.energy.EnergyNode;
 import com.denfop.fabric.energy.EnergyStorage;

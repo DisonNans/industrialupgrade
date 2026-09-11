@@ -18,6 +18,7 @@ public final class IndustrialUpgradeFabric implements ModInitializer {
         FabricMultiMachineRegistry.initialize();
         FabricCableRegistry.initialize();
         FabricGeneratorRegistry.initialize();
+        FabricStorageRegistry.initialize();
         FabricBlockEntities.initialize();
         FabricRecipes.initialize();
         FabricNetworking.initialize();

@@ -1,10 +1,6 @@
 package com.denfop.fabric;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +16,7 @@ public final class IndustrialUpgradeFabric implements ModInitializer {
     public void onInitialize() {
         FabricItemGroups.initialize();
         FabricRegistries.initialize();
+        FabricMultiMachineRegistry.initialize();
         FabricBlockEntities.initialize();
         FabricRecipes.initialize();
         FabricNetworking.initialize();

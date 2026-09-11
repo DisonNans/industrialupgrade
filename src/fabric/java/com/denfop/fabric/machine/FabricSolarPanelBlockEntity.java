@@ -10,15 +10,19 @@ import net.minecraft.util.math.BlockPos;
 
 public final class FabricSolarPanelBlockEntity extends BlockEntity implements EnergyNode {
     private final int tier;
-    private final double generation;
+    private final double dayGeneration;
+    private final double nightGeneration;
+    private final double output;
     private final EnergyStorage energy;
 
     public FabricSolarPanelBlockEntity(BlockPos pos, BlockState state) {
         super(FabricSolarRegistry.BLOCK_ENTITY_TYPE, pos, state);
         FabricSolarPanelBlock block = (FabricSolarPanelBlock) state.getBlock();
         this.tier = block.tier();
-        this.generation = block.generation();
-        this.energy = new EnergyStorage(block.capacity(), block.capacity(), block.capacity());
+        this.dayGeneration = block.dayGeneration();
+        this.nightGeneration = block.nightGeneration();
+        this.output = block.output();
+        this.energy = new EnergyStorage(block.capacity(), output, output);
     }
 
     public void tick() {
@@ -26,8 +30,10 @@ public final class FabricSolarPanelBlockEntity extends BlockEntity implements En
         long time = world.getTimeOfDay() % 24000L;
         boolean daylight = time >= 1000L && time < 12000L;
         boolean exposed = world.isSkyVisible(pos.up());
-        if (daylight && exposed) energy.receive(generation, false);
-        double available = Math.min(energy.getEnergy(), maxTransferPerTick());
+        double generation = daylight ? dayGeneration : nightGeneration;
+        if (exposed) energy.receive(generation, false);
+
+        double available = Math.min(energy.getEnergy(), output);
         for (var direction : net.minecraft.util.math.Direction.values()) {
             if (available <= 0) break;
             var neighbor = world.getBlockEntity(pos.offset(direction));
@@ -45,10 +51,11 @@ public final class FabricSolarPanelBlockEntity extends BlockEntity implements En
     }
 
     @Override public EnergyStorage energyStorage() { return energy; }
-    @Override public double maxTransferPerTick() { return Math.min(energy.getCapacity(), Math.max(32D, generation)); }
+    @Override public double maxTransferPerTick() { return output; }
 
     public String status() {
-        return "Solar " + (tier + 1) + " | " + (long) generation + " EU/t | EU " + (long) energy.getEnergy() + "/" + (long) energy.getCapacity();
+        return "Solar " + (tier + 1) + " | Day " + (long) dayGeneration + " | Night " + (long) nightGeneration
+                + " | EU " + (long) energy.getEnergy() + "/" + (long) energy.getCapacity() + " | Out " + (long) output;
     }
 
     @Override protected void writeNbt(NbtCompound nbt) {

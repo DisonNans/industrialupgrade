@@ -1,6 +1,7 @@
 package com.denfop.fabric.machine;
 
 import com.denfop.fabric.FabricRegistries;
+import com.denfop.fabric.energy.EnergyStorage;
 import com.denfop.fabric.logic.AlloySmelterRecipes;
 import com.denfop.fabric.logic.MachineRecipe;
 import net.minecraft.block.BlockState;
@@ -12,15 +13,14 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 
 /**
- * Behavior-preserving first machine port.
+ * Behavior-preserving port of the original TileEntityDoubleElectricMachine semantics.
  *
- * Original TileEntityDoubleElectricMachine semantics:
+ * Original values verified against 1.12.2:
  * - operation length = 300 ticks
  * - energy demand = 1 per tick
- * - internal capacity = demand * operation length = 300
- * - two input slots, one output slot
- * - progress resets after a successful operation
- * - processing stops and progress resets when the recipe/output is unavailable
+ * - internal capacity = 300
+ * - two input slots and one output slot
+ * - progress resets if processing cannot continue
  */
 public final class AlloySmelterBlockEntity extends BlockEntity implements Inventory {
     private static final int INPUT_A = 0;
@@ -28,8 +28,8 @@ public final class AlloySmelterBlockEntity extends BlockEntity implements Invent
     private static final int OUTPUT = 2;
 
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
+    private final EnergyStorage energy = new EnergyStorage(300.0D, 300.0D, 300.0D);
     private int progress;
-    private double energy;
     private boolean active;
 
     public AlloySmelterBlockEntity(BlockPos pos, BlockState state) {
@@ -40,47 +40,42 @@ public final class AlloySmelterBlockEntity extends BlockEntity implements Invent
         if (world == null || world.isClient) return;
 
         MachineRecipe recipe = findRecipe();
-        if (recipe == null || energy < AlloySmelterRecipes.ENERGY_PER_TICK || !canOutput(recipe)) {
+        if (recipe == null || !energy.use(AlloySmelterRecipes.ENERGY_PER_TICK) || !canOutput(recipe)) {
             progress = 0;
             active = false;
+            markDirty();
             return;
         }
 
         active = true;
-        energy -= AlloySmelterRecipes.ENERGY_PER_TICK;
         progress++;
 
         if (progress >= AlloySmelterRecipes.OPERATION_LENGTH) {
             consumeInputs(recipe);
             insertOutputs(recipe);
             progress = 0;
-            markDirty();
         }
 
         markDirty();
     }
 
     private MachineRecipe findRecipe() {
+        ItemStack first = inventory.get(INPUT_A);
+        ItemStack second = inventory.get(INPUT_B);
         for (MachineRecipe recipe : AlloySmelterRecipes.all()) {
-            if (matches(inventory.get(INPUT_A), recipe.inputA(), recipe.inputACount())
-                    && matches(inventory.get(INPUT_B), recipe.inputB(), recipe.inputBCount())) {
-                return recipe;
-            }
+            if (recipe.matches(first, second)) return recipe;
         }
         return null;
     }
 
     private boolean canOutput(MachineRecipe recipe) {
+        ItemStack current = inventory.get(OUTPUT);
         for (MachineRecipe.Output output : recipe.outputs()) {
-            ItemStack current = inventory.get(OUTPUT);
             if (!current.isEmpty() && current.getItem() != output.item()) return false;
             if (!current.isEmpty() && current.getCount() + output.count() > current.getMaxCount()) return false;
+            if (current.isEmpty() && output.count() > 64) return false;
         }
         return true;
-    }
-
-    private boolean matches(ItemStack stack, net.minecraft.item.Item item, int count) {
-        return !stack.isEmpty() && stack.isOf(item) && stack.getCount() >= count;
     }
 
     private void consumeInputs(MachineRecipe recipe) {
@@ -100,12 +95,12 @@ public final class AlloySmelterBlockEntity extends BlockEntity implements Invent
     }
 
     public void addEnergy(double amount) {
-        energy = Math.min(300.0D, energy + Math.max(0.0D, amount));
+        energy.receive(Math.max(0.0D, amount), false);
         markDirty();
     }
 
-    public double getEnergy() { return energy; }
-    public double getMaxEnergy() { return 300.0D; }
+    public double getEnergy() { return energy.getEnergy(); }
+    public double getMaxEnergy() { return energy.getCapacity(); }
     public int getProgress() { return progress; }
     public int getOperationLength() { return AlloySmelterRecipes.OPERATION_LENGTH; }
     public boolean isActive() { return active; }
@@ -114,10 +109,12 @@ public final class AlloySmelterBlockEntity extends BlockEntity implements Invent
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         nbt.putInt("progress", progress);
-        nbt.putDouble("energy", energy);
+        nbt.putDouble("energy", energy.getEnergy());
         nbt.putBoolean("active", active);
         for (int i = 0; i < inventory.size(); i++) {
-            if (!inventory.get(i).isEmpty()) nbt.put("slot_" + i, inventory.get(i).writeNbt(new NbtCompound()));
+            if (!inventory.get(i).isEmpty()) {
+                nbt.put("slot_" + i, inventory.get(i).writeNbt(new NbtCompound()));
+            }
         }
     }
 
@@ -125,12 +122,13 @@ public final class AlloySmelterBlockEntity extends BlockEntity implements Invent
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         progress = nbt.getInt("progress");
-        energy = nbt.getDouble("energy");
+        energy.setEnergy(nbt.getDouble("energy"));
         active = nbt.getBoolean("active");
-        inventory.clear();
-        inventory.addAll(DefaultedList.ofSize(3, ItemStack.EMPTY));
         for (int i = 0; i < inventory.size(); i++) {
-            if (nbt.contains("slot_" + i)) inventory.set(i, ItemStack.fromNbt(nbt.getCompound("slot_" + i)));
+            inventory.set(i, ItemStack.EMPTY);
+            if (nbt.contains("slot_" + i)) {
+                inventory.set(i, ItemStack.fromNbt(nbt.getCompound("slot_" + i)));
+            }
         }
     }
 
@@ -141,6 +139,8 @@ public final class AlloySmelterBlockEntity extends BlockEntity implements Invent
     @Override public ItemStack removeStack(int slot) { return net.minecraft.inventory.Inventories.removeStack(inventory, slot); }
     @Override public void setStack(int slot, ItemStack stack) { inventory.set(slot, stack); markDirty(); }
     @Override public void markDirty() { super.markDirty(); }
-    @Override public boolean canPlayerUse(net.minecraft.entity.player.PlayerEntity player) { return world != null && player.squaredDistanceTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 64.0; }
-    @Override public void clear() { inventory.clear(); }
+    @Override public boolean canPlayerUse(net.minecraft.entity.player.PlayerEntity player) {
+        return world != null && player.squaredDistanceTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 64.0;
+    }
+    @Override public void clear() { inventory.replaceAll(stack -> ItemStack.EMPTY); markDirty(); }
 }

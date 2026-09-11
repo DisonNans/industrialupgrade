@@ -1,5 +1,6 @@
 package com.denfop.fabric;
 
+import com.denfop.fabric.energy.CableType;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -86,6 +87,7 @@ public final class FabricItemGroups {
                 entries.add(new ItemStack(FabricMultiMachineRegistry.DOUBLE_ASSAMPLER_SCRAP.asItem()));
                 entries.add(new ItemStack(FabricMultiMachineRegistry.TRIPLE_ASSAMPLER_SCRAP.asItem()));
                 entries.add(new ItemStack(FabricMultiMachineRegistry.QUAD_ASSAMPLER_SCRAP.asItem()));
+                for (CableType type : CableType.values()) entries.add(new ItemStack(FabricCableRegistry.CABLES[type.ordinal()]));
             })
             .build();
 

@@ -1,0 +1,1 @@
+{"type":"minecraft:crafting_shaped","pattern":["AGA","GNG","AGA"],"key":{"A":{"item":"industrialupgrade:advanced_generator"},"G":{"item":"minecraft:gold_block"},"N":{"item":"minecraft:netherite_ingot"}},"result":{"item":"industrialupgrade:improved_generator","count":1}}

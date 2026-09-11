@@ -19,19 +19,25 @@ import org.jetbrains.annotations.Nullable;
 
 public final class FabricSolarPanelBlock extends Block implements BlockEntityProvider {
     private final int tier;
-    private final double generation;
+    private final double dayGeneration;
+    private final double nightGeneration;
     private final double capacity;
+    private final double output;
 
-    public FabricSolarPanelBlock(Settings settings, int tier, double generation, double capacity) {
+    public FabricSolarPanelBlock(Settings settings, int tier, double dayGeneration, double nightGeneration, double capacity, double output) {
         super(settings);
         this.tier = tier;
-        this.generation = generation;
+        this.dayGeneration = dayGeneration;
+        this.nightGeneration = nightGeneration;
         this.capacity = capacity;
+        this.output = output;
     }
 
     public int tier() { return tier; }
-    public double generation() { return generation; }
+    public double dayGeneration() { return dayGeneration; }
+    public double nightGeneration() { return nightGeneration; }
     public double capacity() { return capacity; }
+    public double output() { return output; }
 
     @Override public BlockRenderType getRenderType(BlockState state) { return BlockRenderType.MODEL; }
     @Override public BlockEntity createBlockEntity(BlockPos pos, BlockState state) { return new FabricSolarPanelBlockEntity(pos, state); }

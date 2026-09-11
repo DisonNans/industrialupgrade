@@ -1,6 +1,6 @@
 package com.denfop.fabric.machine;
 
-import com.denfop.fabric.FabricRegistries;
+import com.denfop.fabric.FabricMultiMachineRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockRenderType;
@@ -30,18 +30,13 @@ public final class IndustrialProcessorBlock extends Block implements BlockEntity
     public int machineType() { return machineType; }
     public int slotCount() { return slotCount; }
 
-    @Override
-    public BlockRenderType getRenderType(BlockState state) { return BlockRenderType.MODEL; }
-
-    @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new IndustrialProcessorBlockEntity(pos, state, machineType, slotCount);
-    }
+    @Override public BlockRenderType getRenderType(BlockState state) { return BlockRenderType.MODEL; }
+    @Override public BlockEntity createBlockEntity(BlockPos pos, BlockState state) { return new IndustrialProcessorBlockEntity(pos, state); }
 
     @Override
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        if (type == FabricRegistries.INDUSTRIAL_PROCESSOR_BLOCK_ENTITY) {
+        if (type == FabricMultiMachineRegistry.BLOCK_ENTITY_TYPE) {
             return (w, p, s, be) -> ((IndustrialProcessorBlockEntity) be).tick();
         }
         return null;

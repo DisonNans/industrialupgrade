@@ -20,7 +20,8 @@ import net.minecraft.util.math.BlockPos;
  * - energy demand = 1 per tick
  * - internal capacity = 300
  * - two input slots and one output slot
- * - progress resets if processing cannot continue
+ * - output availability is checked before energy is consumed
+ * - progress resets when processing cannot continue
  */
 public final class AlloySmelterBlockEntity extends BlockEntity implements Inventory {
     private static final int INPUT_A = 0;
@@ -40,7 +41,7 @@ public final class AlloySmelterBlockEntity extends BlockEntity implements Invent
         if (world == null || world.isClient) return;
 
         MachineRecipe recipe = findRecipe();
-        if (recipe == null || !energy.use(AlloySmelterRecipes.ENERGY_PER_TICK) || !canOutput(recipe)) {
+        if (recipe == null || !canOutput(recipe) || energy.getEnergy() < AlloySmelterRecipes.ENERGY_PER_TICK) {
             progress = 0;
             active = false;
             markDirty();
@@ -48,6 +49,7 @@ public final class AlloySmelterBlockEntity extends BlockEntity implements Invent
         }
 
         active = true;
+        energy.use(AlloySmelterRecipes.ENERGY_PER_TICK);
         progress++;
 
         if (progress >= AlloySmelterRecipes.OPERATION_LENGTH) {
